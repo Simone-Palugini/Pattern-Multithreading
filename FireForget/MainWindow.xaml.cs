@@ -31,16 +31,23 @@ namespace FireForget
         private void btn_start_Click(object sender, RoutedEventArgs e)
         {
             cts = new CancellationTokenSource();
-            Worker wrk = new Worker(10, 1000, cts);
+            //Worker wrk = new Worker(10, 1000, cts);
+            //wrk.Start();
+            IProgress<int> progress = new Progress<int>(UpdateUI);
+            WorkerProgress wrk = new WorkerProgress(10, 1000, cts, progress);
             wrk.Start();
             MessageBox.Show("Mi dimentico del thread secondario e non lo attendo per visualizzare questo messaggio");
+        }
+
+        private void UpdateUI(int i)
+        {
+            lbl_conteggio.Content = i.ToString();
         }
 
         private void btn_stop_Click(object sender, RoutedEventArgs e)
         {
             if (cts != null)
                 cts.Cancel();
-
         }
     }
 }
