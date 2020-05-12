@@ -40,6 +40,7 @@ namespace FireForget
         {
             if (cts != null)
                 cts.Cancel();
+
         }
     }
 }
